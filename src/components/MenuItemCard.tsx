@@ -1,5 +1,7 @@
 import React from 'react';
 
+const placeholderImage = 'https://placehold.co/400x300?text=No+Image';
+
 interface MenuItem {
   id: number;
   name: string;
@@ -17,7 +19,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item }) => {
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden">
       <div className="relative">
         <img
-          src={item.image}
+          src={item.image || placeholderImage}
           alt={item.name}
           className="w-full h-48 object-cover"
         />

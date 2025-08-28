@@ -38,6 +38,8 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     // Load configuration
@@ -52,6 +54,15 @@ function App() {
       .then(data => setMenuItems(data.items))
       .catch(error => console.error('Error loading menu:', error));
   }, []);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleAdminClick = () => {
     if (isLoggedIn) {
@@ -73,10 +84,12 @@ function App() {
     setConfig(newConfig);
     try {
       await updateConfigInS3(newConfig);
-      alert("Configuration saved to S3 ✅");
+      setMessage("Configuration saved ✅");
+      setMessageType('success');
     } catch (err) {
       console.error(err);
-      alert("Failed to save configuration ❌");
+      setMessage("Failed to save configuration ❌");
+      setMessageType('error');
     }
   };
 
@@ -84,10 +97,12 @@ function App() {
     setMenuItems(newItems);
     try {
       await updateMenuInS3({ items: newItems });
-      alert("Menu saved to S3 ✅");
+      setMessage("Menu saved ✅");
+      setMessageType('success');
     } catch (err) {
       console.error(err);
-      alert("Failed to save menu ❌");
+      setMessage("Failed to save menu ❌");
+      setMessageType('error');
     }
   };
 
@@ -117,6 +132,16 @@ function App() {
           onSaveMenu={handleSaveMenu}
           onClose={() => setShowAdmin(false)}
         />
+      )}
+
+      {message && (
+        <div
+          className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded shadow-lg text-white z-50 transition-opacity duration-300 ${messageType === 'success' ? 'bg-green-600' : 'bg-red-600'
+            }`}
+          role="alert"
+        >
+          {message}
+        </div>
       )}
     </div>
   );
