@@ -15,10 +15,10 @@ const Login: React.FC<LoginProps> = ({ onLogin, onClose }) => {
     e.preventDefault();
     setError('');
 
-    if (username === 'admin' && password === '1234') {
+    if (username === 'admin' && password === 'Shatul@1234') {
       onLogin(true);
     } else {
-      setError('Invalid credentials. Try admin/1234');
+      setError('Invalid credentials.');
     }
   };
 
@@ -34,7 +34,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onClose }) => {
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -52,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onClose }) => {
               />
             </div>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
@@ -69,13 +69,13 @@ const Login: React.FC<LoginProps> = ({ onLogin, onClose }) => {
               />
             </div>
           </div>
-          
+
           {error && (
             <div className="text-red-500 text-sm bg-red-50 p-3 rounded-xl">
               {error}
             </div>
           )}
-          
+
           <button
             type="submit"
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-colors"
